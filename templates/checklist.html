@@ -16,6 +16,7 @@
                 {{item[1]}}
                 <a href="/edit/{{item[0]}}">Edit</a>
                 <a href="/delete/{{item[0]}}">Delete</a>
+                <button onclick = "setReminder('{{item[1]}}')">Remind</button>
             </li>
             {% endfor %}
         </ul>
@@ -24,5 +25,33 @@
             <button type="submit">Add</button>
         </form>
     </div>
+
+    <script>
+        function sendReminderEmail(item){
+            fetch('/send_email', {
+                method : 'POST',
+                headers: {
+                    'Content-Type' : 'application/json'
+                }, 
+                body: JSON.stringify({
+                    item:item
+                })
+            }).then(response => {
+                if(response.ok){
+                    console.log('Reminder email sent successfully.')
+                } else{
+                    console.log('Failed to send reminder email.')
+                }
+            }).catch(error =>{
+                console.error("Error occured", error)
+            });
+        }
+        function setReminder(item){
+            setTimeout(function(){
+                let reminder = confirm("Reminder : " + item);
+            }, 5*1000);
+            sendReminderEmail(item)
+        }
+    </script>
 </body>
 </html>
