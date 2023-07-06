@@ -12,9 +12,10 @@
         <ul class="checklist-items">
             {% for item in items %}
             <li>
-                {{item}}
-                <a href="/edit/{{loop.index}}">Edit</a>
-                <a href="/delete/{{loop.index}}">Delete</a>
+                <!-- item[0] is id, item[1] is item text -->
+                {{item[1]}}
+                <a href="/edit/{{item[0]}}">Edit</a>
+                <a href="/delete/{{item[0]}}">Delete</a>
             </li>
             {% endfor %}
         </ul>
